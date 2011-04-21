@@ -31,7 +31,9 @@ Create Netbeans layout:
         [info] 
         [info] Total time: 0 s, completed Apr 20, 2011 11:27:13 PM
 
-Remove Netbeans artifacts from the project folder:
+Now you can open your SBT project in Netbeans.
+
+In order to remove Netbeans artifacts from the project folder, you may use `netbeans-remove-profile` task: 
 
         > netbeans-remove-profile 
         [info] 
