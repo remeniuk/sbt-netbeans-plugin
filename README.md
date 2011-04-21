@@ -21,6 +21,18 @@ Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`proje
 	   ...
 	}
 
+If your project has subprojects, SbtNetbeansPlugin should be mixed with all of them:
+
+        class MainProject(info: ProjectInfo) extends DefaultWebProject(info)
+                                                with SbtNetbeansPlugin{
+
+          lazy val subProject = project("sub-project", "sub-project", new SubProject(_))
+
+          class SubProject(info: ProjectInfo) extends DefaultWebProject(info)
+                                                 with SbtNetbeansPlugin
+
+        }
+
 Create Netbeans layout:
 
         > netbeans-create-profile              
