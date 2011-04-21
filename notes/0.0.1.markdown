@@ -6,7 +6,7 @@ Initial release:
 * Sub-projects are supported - Netbeans project layout is created for all sub-projects of the project
 * Ant targets are mapped to SBT tasks, making it possible to `clean`, `compile`, `test` and `package` project from within the IDE
 
-## Running the plugin
+# Running the plugin
 Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `project\plugins\Plugins.scala`):
 
 	import sbt._
