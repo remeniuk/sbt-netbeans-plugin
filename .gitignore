@@ -1,6 +1,6 @@
 lib_managed/
-nbproject/
-build.xml
+/nbproject/
+/build.xml
 project/boot/
 project/plugins/lib_managed
 project/plugins/project
