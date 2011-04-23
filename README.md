@@ -1,5 +1,7 @@
 Simple plugin for SBT creating Netbeans project layout, so that SBT project with subprojects and dependencies can be opened in Netbeans. Basic operations, such as `clean`, `compile`, `test`, etc. are supported from UI.
 
+**Current release: 0.0.3**
+
 ## Running the plugin
 Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `project\plugins\Plugins.scala`):
 
@@ -60,9 +62,11 @@ In order to remove Netbeans artifacts from the project folder, you may use `netb
 ## History
 
 **Release 0.0.3**:
+
 * SBT executable in the Ant script is chosen with regards to the current OS;
 * Unmanaged dependencies of the plugin projects are correctly recognized;
-* scala-library.jar and scala-compiler.jar are added to the Netbeans project libs to enable highlighting;
+* `scala-library.jar` and `scala-compiler.jar` are added to the Netbeans project libs to enable highlighting;
 
 **Release 0.0.2**:
-* SBT project files, resource/test resources are displayed at the project pane
+
+* SBT project files, resource/test resources are displayed at the project pane;
