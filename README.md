@@ -8,14 +8,14 @@ Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `
 	class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 
           val netbeansPluginRepo = "Netbeans Plugin Github Repo" at "http://remeniuk.github.com/maven/"
-          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.1"
+          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.2"
 
 	}
 
 Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`project\build\<project>.scala`):
 
 	import sbt._
-	import com.vasilrem.sbtplugins._
+	import org.netbeans.plugins._
 
 	class SampleProject(info: ProjectInfo) extends DefaultWebProject(info) with SbtNetbeansPlugin{	
 	   ...
