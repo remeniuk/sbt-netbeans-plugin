@@ -59,7 +59,18 @@ class NetbeansProjectProperties(propertiesPath: Path,
   private def subprojectClasspath =
     projectDefinition.subProjects
   .map(subProject => "${reference.%s.jar}".format(subProject._2.name))
-  .mkString(":")
+
+  /**
+   * Scala compiler and library jars, required for code highlighting
+   */
+  private def scalaJars =
+    projectDefinition.buildLibraryJar :: projectDefinition.buildCompilerJar :: Nil
+
+  private def managedDependencies =
+    projectDefinition.managedClasspath(projectDefinition.config("compile")).get
+
+  private def unmanagedDependencies =
+    projectDefinition.unmanagedClasspath.flatMap(a => a).get
 
   /**
    * Netbeans project property keys, mapped to SBT project properties
@@ -74,13 +85,15 @@ class NetbeansProjectProperties(propertiesPath: Path,
     .map(_.relativePath).mkString(":"),
 
     "javac.classpath" ->
-    (subprojectClasspath ::
-     (projectDefinition.managedClasspath(projectDefinition.config("compile")) +++
-      projectDefinition.unmanagedClasspath).get
-     .map(_.relativePath).toList).mkString(":"),
+    (subprojectClasspath ++
+     (managedDependencies ++ unmanagedDependencies ++ scalaJars)
+     .map(_.absolutePath)
+     //map(_.relativePath) <- doesn't work properly for "project/boot" unmanaged dependencies
+     //.flatMap(p => Path.relativize(projectDefinition.path("."), p)) <- doesn't work properly for sub-projects
+    ).mkString(":"),
 
     "javac.test.classpath" -> projectDefinition.testClasspath.get
-    .map(_.relativePath).mkString(":"),
+    .flatMap(p => Path.relativize(projectDefinition.path("."), p)).mkString(":"),
 
     "dist.jar" -> projectDefinition.destPath.relativePath
   ) ++ subprojectProperties

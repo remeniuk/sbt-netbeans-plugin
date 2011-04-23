@@ -31,15 +31,27 @@ class AntScript(scriptPath: Path,
   import AntScript._
 
   /**
+   * Operating system name
+   */
+  lazy val operatingSystem = System.getProperty("os.name")
+
+  /**
    * Transformer rewrites Ant script with SBT project properties
+   * and system settings
    */
   private val scriptRewriter = new RuleTransformer(new RewriteRule {
 
       override def transform(n: Node): Seq[Node] = n match {
-        case Elem(_, "project", _, _, children @ _*)  =>
+        case <project>{children @ _*}</project> =>
           <project name={projectDefinition.projectName.value} default="default" basedir=".">{
               children
             }</project>
+          
+        case <exec>{args @ _*}</exec> if(operatingSystem.startsWith("Windows")) =>
+          <exec executable="sbt.bat">{
+              args
+            }</exec>
+
         case other => other
       }
 
