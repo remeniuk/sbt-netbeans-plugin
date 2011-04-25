@@ -18,7 +18,7 @@ Simple plugin for SBT creating Netbeans project layout, so that SBT project with
 * SBT project files, resource/test resources are displayed at the project pane;
 
 ## Using the processor
-Add processor repository:
+Add the processor's repository:
 
         > *nbrepo at http://remeniuk.github.com/maven/
 
