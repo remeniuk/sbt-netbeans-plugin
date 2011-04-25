@@ -37,7 +37,7 @@ To get the list of all supported project templates, submit the following command
        [error] create **default | web | plugin | processor**
 
 Processors are added per SBT-user, so once you install **sbt-netbeans-processor**, it will always require just one SBT command to "netbeanize" the project (without a need to manually create or copy any files).
-If you want to remove or update **sbt-netbeans-processor**, you can submit the following command in SBT:
+In order to remove or update **sbt-netbeans-processor**, submit the following command:
 
       *remove netbeans
 
