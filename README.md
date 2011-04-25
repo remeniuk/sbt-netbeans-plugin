@@ -26,7 +26,7 @@ Add **sbt-netbeans-processor**:
 
         > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.4
 
-Create empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
+Create an empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
 
         > netbeans create default
 
