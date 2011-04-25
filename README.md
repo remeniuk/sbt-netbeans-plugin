@@ -2,6 +2,11 @@ Simple plugin for SBT creating Netbeans project layout, so that SBT project with
 
 ## History
 
+**Release 0.0.4**:
+
+* Added **sbt-netbeans-processor**;
+* Simplified package structure - **sbt-netbeans-plugin** sources were moved to `netbeans.plugin`;
+
 **Release 0.0.3**:
 
 * SBT executable in the Ant script is chosen with regards to the current OS;
@@ -12,6 +17,30 @@ Simple plugin for SBT creating Netbeans project layout, so that SBT project with
 
 * SBT project files, resource/test resources are displayed at the project pane;
 
+## Using the processor
+Add processor repository:
+
+        > *nbrepo at http://remeniuk.github.com/maven/
+
+Add **sbt-netbeans-processor**:
+
+        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.4
+
+Create empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
+
+        > netbeans create default
+
+To get the list of all supported project templates, submit the following command:
+
+       > netbeans create
+       [error] Invalid arg string! Use one of the following:
+       [error] create **default | web | plugin | processor**
+
+Processors are added per SBT-user, so once you install **sbt-netbeans-processor**, it will always require just one SBT command to "netbeanize" the project (without a need to manually create or copy any files).
+If you want to remove or update **sbt-netbeans-processor**, you can submit the following command in SBT:
+
+      *remove netbeans
+
 ## Running the plugin
 Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `project\plugins\Plugins.scala`):
 
@@ -20,14 +49,14 @@ Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `
 	class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 
           val netbeansPluginRepo = "Netbeans Plugin Github Repo" at "http://remeniuk.github.com/maven/"
-          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.3"
+          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.4"
 
 	}
 
 Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`project\build\<project>.scala`):
 
 	import sbt._
-	import org.netbeans.plugins._
+	import netbeans.plugin._
 
 	class SampleProject(info: ProjectInfo) extends DefaultWebProject(info) with SbtNetbeansPlugin{	
 	   ...
