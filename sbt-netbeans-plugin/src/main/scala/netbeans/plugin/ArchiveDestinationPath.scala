@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.netbeans.plugins
+package netbeans.plugin
 
 import sbt._
 

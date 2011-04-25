@@ -1,16 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package org.netbeans.plugins.sbtnb
+package netbeans.project
 
 import java.util.Properties
 import sbt._
 import FileUtilities._
 import Path._
 import java.io.File
-import ArchiveDestinationPath._
+import netbeans.plugin.ArchiveDestinationPath._
 import scala.collection.jcl.Conversions._
 import java.util.Collections._
 

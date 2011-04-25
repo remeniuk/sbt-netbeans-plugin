@@ -1,9 +1,9 @@
-package org.netbeans.plugins
+package netbeans.plugin
 
 import sbt._
 import FileUtilities._
 import Path._
-import sbtnb._
+import project._
 import java.io.{File, InputStream, OutputStream, FileInputStream, FileOutputStream}
 import java.util.Properties
 import scala.xml._

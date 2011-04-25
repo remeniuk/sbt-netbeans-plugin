@@ -1,9 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package org.netbeans.plugins.sbtnb
+package netbeans.project
 
 import scala.xml.{XML, Node, Elem, Text}
 import scala.xml.transform.{RewriteRule, RuleTransformer}

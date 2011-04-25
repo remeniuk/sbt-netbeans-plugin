@@ -1,4 +1,4 @@
-package org.netbeans.plugins.sbtnb
+package netbeans.project
 
 import scala.xml.{XML, Node, Elem, Text}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
