@@ -34,7 +34,7 @@ To get the list of all supported project templates, submit the following command
 
        > netbeans create
        [error] Invalid arg string! Use one of the following:
-       [error] create **default | web | plugin | processor**
+       [error] create default | web | plugin | processor
 
 Processors are added per SBT-user, so once you install **sbt-netbeans-processor**, it will always require just one SBT command to "netbeanize" the project (without a need to manually create or copy any files).
 In order to remove or update **sbt-netbeans-processor**, use the following command:
