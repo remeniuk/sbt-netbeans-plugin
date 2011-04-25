@@ -37,12 +37,14 @@ To get the list of all supported project templates, submit the following command
        [error] create **default | web | plugin | processor**
 
 Processors are added per SBT-user, so once you install **sbt-netbeans-processor**, it will always require just one SBT command to "netbeanize" the project (without a need to manually create or copy any files).
-In order to remove or update **sbt-netbeans-processor**, submit the following command:
+In order to remove or update **sbt-netbeans-processor**, use the following command:
 
       *remove netbeans
 
 ## Running the plugin
-Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `project\plugins\Plugins.scala`):
+**NOTE:** When you create a project using the processor, steps 1-3 are made automatically!
+
+**1.** Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `project\plugins\Plugins.scala`):
 
 	import sbt._
 
@@ -53,7 +55,7 @@ Add **sbt-netbeans-plugin** to the plugin configuration of your project (e.g., `
 
 	}
 
-Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`project\build\<project>.scala`):
+**2.** Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`project\build\<project>.scala`):
 
 	import sbt._
 	import netbeans.plugin._
@@ -62,7 +64,7 @@ Mix `org.netbeans.plugins.SbtNetbeansPlugin` into the project definition (`proje
 	   ...
 	}
 
-If your project has subprojects, SbtNetbeansPlugin should be mixed with all of them:
+**2.1.** If your project has subprojects, SbtNetbeansPlugin should be mixed with all of them:
 
         class MainProject(info: ProjectInfo) extends DefaultWebProject(info)
                                                 with SbtNetbeansPlugin{
@@ -74,7 +76,7 @@ If your project has subprojects, SbtNetbeansPlugin should be mixed with all of t
 
         }
 
-Create Netbeans layout:
+**3.** Create Netbeans layout:
 
         > netbeans-create-profile              
         [info] 
