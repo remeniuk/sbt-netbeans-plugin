@@ -1,4 +1,4 @@
-Simple plugin for SBT creating Netbeans project layout, so that SBT project with subprojects and dependencies can be opened in Netbeans. Basic operations, such as `clean`, `compile`, `test`, etc. are supported from UI.
+**sbt-netbeans** is a set of SBT processor and plugin that make possible using SBT projects in Netbeans. **sbt-netbeans-processor** allows you to create an empty SBT project with Netbeans support in one move. With **sbt-netbeans-plugin** you can easily *netbeanize* your existing projects. All the sweet spots, such as code-completion, sub-projects and dependencies support, and running actions from within the IDE are supported.
 
 ## History
 
