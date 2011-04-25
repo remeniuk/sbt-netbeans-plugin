@@ -1,5 +1,5 @@
 import sbt._
-import org.netbeans.plugins._
+import netbeans.plugin._
 import processor.{Processor, Success, ProcessorResult}
 
 class SbtNetbeansProject(info: ProjectInfo) extends DefaultProject(info) with SbtNetbeansPlugin
