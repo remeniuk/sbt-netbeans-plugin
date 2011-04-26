@@ -29,6 +29,7 @@ class AntScript(scriptPath: Path,
                 log: Logger){
 
   import AntScript._
+  import NetbeansProject._
 
   /**
    * Operating system name
@@ -47,10 +48,16 @@ class AntScript(scriptPath: Path,
               children
             }</project>
           
-        case <exec>{args @ _*}</exec> if(operatingSystem.startsWith("Windows")) =>
-          <exec executable="sbt.bat">{
-              args
-            }</exec>
+        case <exec>{args @ _*}</exec> =>
+          <exec dir={projectDefinition.projectPathPrefix} 
+            executable={
+              if(operatingSystem.startsWith("Windows")) "sbt.bat" else "sbt"
+            }>{args}</exec>      
+          
+        case arg @ <arg/> if(projectDefinition.isSubproject) =>
+          <arg value={
+              ";project %s ;%s".format(projectDefinition.name, (arg \\ "@value").text)
+            }/>
 
         case other => other
       }

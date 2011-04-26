@@ -14,7 +14,6 @@ object NetbeansProjectProperties {
             projectDefinition: BasicScalaProject with MavenStyleScalaPaths,
             log: Logger):NetbeansProjectProperties =
               new NetbeansProjectProperties(propertiesPath, projectDefinition, log)
-
 }
 
 /**
@@ -27,6 +26,8 @@ class NetbeansProjectProperties(propertiesPath: Path,
                                 projectDefinition: BasicScalaProject with MavenStyleScalaPaths,
                                 log: Logger) extends Properties{
 
+  import NetbeansProject._
+  
   readStream(propertiesPath.asFile, log) { content =>
     load(content)
     None
@@ -66,27 +67,13 @@ class NetbeansProjectProperties(propertiesPath: Path,
 
   private def unmanagedDependencies =
     projectDefinition.unmanagedClasspath.flatMap(a => a).get
-
-  /**
-   * Recursively builds prefix, with "../"-selector per each level
-   */
-  private def buildPathPrefix(prefix: String, path: Path): String = 
-    if(Path.fromFile(path.asFile.getParentFile) != projectDefinition.rootProject.info.projectPath)
-      buildPathPrefix("../" + prefix, path) else prefix
-  
-  /**
-   * If the project is a sub-project, add prefix to the path
-   */
-  private val projectPathPrefix = 
-    if(projectDefinition.info.projectPath != projectDefinition.rootProject.info.projectPath)
-      buildPathPrefix("../", projectDefinition.info.projectPath) else ""
   
   /**
    * Returns path, relativized from root to the current project
    */  
   private def relativizeFromRoot(path: Path) = 
     Path.relativize(projectDefinition.rootProject.path("."), path)
-  .map(projectPathPrefix + _)
+  .map(projectDefinition.projectPathPrefix + _)
     
       
   /**
