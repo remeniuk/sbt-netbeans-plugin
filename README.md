@@ -2,6 +2,12 @@
 
 ## History
 
+**Release 0.0.5**:
+
+* Fixed #5, #7;
+* Netbeans config files with classpaths are updated every time SBT `update` is called;
+* `target`, `plugin`, `boot`, etc. are not displayed at the project pane;
+
 **Release 0.0.4**:
 
 * Added **sbt-netbeans-processor**;
@@ -24,7 +30,7 @@ Add the processor's repository:
 
 Add **sbt-netbeans-processor**:
 
-        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.4
+        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.5
 
 Create an empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
 
@@ -51,7 +57,7 @@ In order to remove or update **sbt-netbeans-processor**, use the following comma
 	class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 
           val netbeansPluginRepo = "Netbeans Plugin Github Repo" at "http://remeniuk.github.com/maven/"
-          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.4"
+          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.5"
 
 	}
 
@@ -87,6 +93,15 @@ In order to remove or update **sbt-netbeans-processor**, use the following comma
         [info] Total time: 0 s, completed Apr 20, 2011 11:27:13 PM
 
 **Now you can open your SBT project in Netbeans!**
+
+By default, every time SBT `update` task is called, Netbeans project classpaths are updated. To turn this behavior off, you will need to override `refreshNetbeansOnUpdate` in the project definition:
+
+        def refreshNetbeansOnUpdate = false
+
+Hereafter, every time you add a dependency through SBT, you'll have to call `netbeans-update-dependencies` to update the classpaths.
+When you add a sub-project, Netbeans configs need to be updated:
+
+        > netbeans-update-profile
 
 In order to remove Netbeans artifacts from the project folder, you may use `netbeans-remove-profile` task: 
 
