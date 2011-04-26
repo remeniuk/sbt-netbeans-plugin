@@ -68,16 +68,23 @@ class NetbeansProjectProperties(propertiesPath: Path,
     projectDefinition.unmanagedClasspath.flatMap(a => a).get
 
   /**
+   * Recursively builds prefix, with "../"-selector per each level
+   */
+  private def buildPathPrefix(prefix: String, path: Path): String = 
+    if(Path.fromFile(path.asFile.getParentFile) != projectDefinition.rootProject.info.projectPath)
+      buildPathPrefix("../" + prefix, path) else prefix
+  
+  /**
    * If the project is a sub-project, add prefix to the path
    */
   private val projectPathPrefix = 
-    if(projectDefinition.rootProject.info.projectPath != projectDefinition.info.projectPath)
-      "../" else ""
+    if(projectDefinition.info.projectPath != projectDefinition.rootProject.info.projectPath)
+      buildPathPrefix("../", projectDefinition.info.projectPath) else ""
   
   /**
-   * Returns path, relative to the root project
+   * Returns path, relativized from root to the current project
    */  
-  private def relativizeToRoot(path: Path) = 
+  private def relativizeFromRoot(path: Path) = 
     Path.relativize(projectDefinition.rootProject.path("."), path)
   .map(projectPathPrefix + _)
     
@@ -95,10 +102,10 @@ class NetbeansProjectProperties(propertiesPath: Path,
     "javac.classpath" ->
     (subprojectClasspath ++
      (managedDependencies ++ unmanagedDependencies ++ scalaJars)
-     .flatMap(relativizeToRoot)).mkString(":"),
+     .flatMap(relativizeFromRoot)).mkString(":"),
 
     "javac.test.classpath" -> projectDefinition.testClasspath.get
-    .flatMap(relativizeToRoot).mkString(":"),
+    .flatMap(relativizeFromRoot).mkString(":"),
 
     "dist.jar" -> projectDefinition.destPath.relativePath
   ) ++ subprojectProperties
