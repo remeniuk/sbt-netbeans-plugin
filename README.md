@@ -96,7 +96,7 @@ In order to remove or update **sbt-netbeans-processor**, use the following comma
 
 By default, every time SBT `update` task is called, Netbeans project classpaths are updated. To turn this behavior off, you will need to override `refreshNetbeansOnUpdate` in the project definition:
 
-        def refreshNetbeansOnUpdate = false
+        override def refreshNetbeansOnUpdate = false
 
 Hereafter, every time you add a dependency through SBT, you'll have to call `netbeans-update-dependencies` to update the classpaths.
 When you add a sub-project, Netbeans configs need to be updated:
