@@ -68,27 +68,37 @@ class NetbeansProjectProperties(propertiesPath: Path,
     projectDefinition.unmanagedClasspath.flatMap(a => a).get
 
   /**
+   * If the project is a sub-project, add prefix to the path
+   */
+  private val projectPathPrefix = 
+    if(projectDefinition.rootProject.info.projectPath != projectDefinition.info.projectPath)
+      "../" else ""
+  
+  /**
+   * Returns path, relative to the root project
+   */  
+  private def relativizeToRoot(path: Path) = 
+    Path.relativize(projectDefinition.rootProject.path("."), path)
+  .map(projectPathPrefix + _)
+    
+      
+  /**
    * Netbeans project property keys, mapped to SBT project properties
    */
   private def projectProperties = Map(
     "application.title" -> projectDefinition.projectName.value,
 
-    "file.reference.main-scala" -> projectDefinition.mainScalaSourcePath.get
-    .map(_.relativePath).mkString(":"),
+    "file.reference.main-scala" -> projectDefinition.mainScalaSourcePath.relativePath,
 
-    "file.reference.test-scala" -> projectDefinition.testScalaSourcePath.get
-    .map(_.relativePath).mkString(":"),
+    "file.reference.test-scala" -> projectDefinition.testScalaSourcePath.relativePath,
 
     "javac.classpath" ->
     (subprojectClasspath ++
      (managedDependencies ++ unmanagedDependencies ++ scalaJars)
-     .map(_.absolutePath)
-     //map(_.relativePath) <- doesn't work properly for "project/boot" unmanaged dependencies
-     //.flatMap(p => Path.relativize(projectDefinition.path("."), p)) <- doesn't work properly for sub-projects
-    ).mkString(":"),
+     .flatMap(relativizeToRoot)).mkString(":"),
 
     "javac.test.classpath" -> projectDefinition.testClasspath.get
-    .flatMap(p => Path.relativize(projectDefinition.path("."), p)).mkString(":"),
+    .flatMap(relativizeToRoot).mkString(":"),
 
     "dist.jar" -> projectDefinition.destPath.relativePath
   ) ++ subprojectProperties

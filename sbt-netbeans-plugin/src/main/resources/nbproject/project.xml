@@ -8,7 +8,7 @@
             <source-roots>
                 <root id="src.dir"/>
                 <root id="resources.dir" name="Resources"/>      
-                <root id="sources.sbt.project" name="Project"/>                
+                <root id="sources.sbt.project" name="Configuration"/>                
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

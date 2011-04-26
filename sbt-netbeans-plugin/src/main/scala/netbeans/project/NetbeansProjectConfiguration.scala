@@ -1,6 +1,6 @@
 package netbeans.project
 
-import scala.xml.{XML, Node, Elem, Text}
+import scala.xml.{XML, Node, NodeSeq, Elem, Text}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 import sbt._
 import FileUtilities._
@@ -48,12 +48,27 @@ class NetbeansProjectConfiguration(projectConfigPath: Path,
               <id>jar</id>
             </reference>
         }.toSeq
-
+        
         override def transform(n: Node): Seq[Node] = n match {
-          case Elem(prefix, "name", attribs, scope, _*)  =>
-            Elem(prefix, "name", attribs, scope, Text(projectDefinition.projectName.value))
-          case Elem(prefix, "references", attribs, scope, _*)  =>
+          case <name>{_}</name>  =>
+            <name>{projectDefinition.projectName.value}</name>
+            
+          case Elem(prefix, "references", attribs, scope)  =>
             Elem(prefix, "references", attribs, scope, references:_ *)
+   
+          case elem @ Elem(_, "root", attributes, _, children @ _*) 
+            if((elem \\ "@id").text match {
+                case "src.dir" if(projectDefinition
+                                  .mainScalaSourcePath.get.isEmpty) => true
+                case "resources.dir" if(projectDefinition
+                                        .mainResourcesPath.get.isEmpty) => true
+                case "test.src.dir" if(projectDefinition
+                                       .testScalaSourcePath.get.isEmpty) => true
+                case "test.resources.dir" if(projectDefinition
+                                             .testResourcesPath.get.isEmpty) => true
+                case _ => false
+              }) => NodeSeq.Empty 
+            
           case other => other
         }
       })
