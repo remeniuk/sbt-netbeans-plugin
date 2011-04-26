@@ -8,12 +8,12 @@ class SbtNetbeansProject(info: ProjectInfo) extends DefaultProject(info) with Sb
   override def managedStyle = ManagedStyle.Maven
   lazy val publishTo = Resolver.file("GitHub", new java.io.File("../remeniuk.github.com/maven/"))
    
-  lazy val pluginProject = project("sbt-netbeans-plugin", "sbt-netbeans-plugin", new SbtNetbeansPluginProject(_))
-  lazy val processorProject = project("sbt-netbeans-processor", "sbt-netbeans-processor", new SbtNetbeansProcessorProject(_))
+  lazy val pluginProject = project("sbt-netbeans-plugin", "sbt-netbeans-plugin", new SbtNetbeansPluginProject(_))  
+  lazy val processorProject = project("sbt-netbeans-processor", "sbt-netbeans-processor", new SbtNetbeansProcessorProject(_))  
 
-  class SbtNetbeansPluginProject(info: ProjectInfo) extends PluginProject(info) with SbtNetbeansPlugin
-
+  class SbtNetbeansPluginProject(info: ProjectInfo) extends PluginProject(info) with SbtNetbeansPlugin  
+  
   class SbtNetbeansProcessorProject(info: ProjectInfo) extends ProcessorProject(info) with SbtNetbeansPlugin
-     
+       
 }
 

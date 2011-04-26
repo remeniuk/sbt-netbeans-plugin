@@ -20,19 +20,34 @@ trait SbtNetbeansPlugin extends BasicScalaProject with MavenStyleScalaPaths {
   }
 
   /**
-   * Creates Netbeans profiles for an existing SBT project
+   * Creates files required by Netbeans for an existing SBT project
    */
-  lazy val netbeansCreateProfile = task{
+  lazy val netbeansCreateProfile = netbeansUpdateProfile dependsOn (
+    task {
+      (rootProject.path(".") / "project" / "plugins" ** "*.jar")
+      .filter(_.relativePath.contains("sbt-netbeans-plugin")).get map copyNetbeansFiles           
+      None
+    }) 
 
-    (rootProject.path(".") / "project" / "plugins" ** "*.jar")
-    .filter(_.relativePath.contains("sbt-netbeans-plugin")).get map copyNetbeansFiles
-
-    NetbeansProjectProperties("nbproject" / "project.properties", this, log).store
+  /**
+   * Updates Netbeans project profile/config according to SBT properties. Project 
+   * config should normally be updated only, if a new subproject has been
+   * added
+   */  
+  lazy val netbeansUpdateProfile = task {
     AntScript("build.xml", this, log).store
-    NetbeansProjectConfiguration("nbproject" / "project.xml", this, log).store
-
+    NetbeansProjectConfiguration("nbproject" / "project.xml", this, log).store    
     None
-  }
+  } dependsOn(netbeansUpdateDependencies)
+  
+  /**
+   * Updates Netbeans properties according to SBT properties. Properties should
+   * be updated every time a new dependency is added to the SBT
+   */  
+  lazy val netbeansUpdateDependencies = task {
+    NetbeansProjectProperties("nbproject" / "project.properties", this, log).store
+    None
+  }  
 
   /**
    * Removes Netbeans artifacts from the project
@@ -42,4 +57,20 @@ trait SbtNetbeansPlugin extends BasicScalaProject with MavenStyleScalaPaths {
     None
   }
 
+  /**
+   * By default, Netbeans project/config files are updated every time `update`
+   * task is executed.
+   * The method should be overriden (to return `false`), if refresh of the 
+   * Netbeans project files should not happen on each SBT update
+   */
+  def refreshNetbeansOnUpdate = true
+    
+  /**
+   * Updates Netbeans project files on SBT `update`, if required 
+   */
+  override def updateAction = 
+    if(refreshNetbeansOnUpdate) 
+      netbeansUpdateDependencies.dependsOn(super.updateAction) 
+  else update
+  
 }
