@@ -99,3 +99,9 @@ In order to remove Netbeans artifacts from the project folder, you may use `netb
         [success] Successful.
         [info] 
         [info] Total time: 0 s, completed Apr 21, 2011 12:48:12 AM
+
+## Building from sources
+
+        > git clone git://github.com/remeniuk/sbt-netbeans-plugin.git
+        > cd sbt-netbeans-plugin
+        > sbt publish-local
