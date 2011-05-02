@@ -1,11 +1,8 @@
-lib_managed/
-/nbproject/
+/build
 /build.xml
-project/boot/
-project/plugins/lib_managed
-project/plugins/project
-project/plugins/src_managed
-project/plugins/target
-project/build/target
-target/
+/lib
+/manifest.mf
+/nbproject
+/project
+/target
 

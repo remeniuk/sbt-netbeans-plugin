@@ -1,5 +1,0 @@
-Release 0.0.3:
-
-* SBT executable in the Ant script is chosen with regards to the current OS;
-* Unmanaged dependencies of the plugin projects are correctly recognized;
-* scala-library.jar and scala-compiler.jar are added to the Netbeans project libs to enable highlighting;

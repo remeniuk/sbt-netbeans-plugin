@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project>
+    <description>Builds, tests, and runs the project sbt-netbeans-plugin.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <target description="Clean build products." name="clean">
+        <exec executable="sbt">
+            <arg value="clean"/>
+        </exec>
+    </target>
+
+    <target description="Build JAR." name="jar">
+        <exec executable="sbt">
+            <arg value=";package;package-src"/>
+        </exec>
+    </target>
+
+    <target description="Compile project." name="compile">
+        <exec executable="sbt">
+            <arg value="compile"/>
+        </exec>
+    </target>
+
+    <target description="Run unit tests." name="test">
+        <exec executable="sbt">
+            <arg value="test"/>
+        </exec>
+    </target>
+
+</project>
