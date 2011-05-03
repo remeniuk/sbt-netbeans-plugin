@@ -4,13 +4,15 @@ import java.nio.charset.Charset
 import java.util.Properties
 import sbt._
 
-class ProjectProperties(val originalFilePath: Path) 
+case class ProjectProperties(originalFilePath: Path) 
 (implicit context: ProjectContext)
 extends Properties with NetbeansConfigFile{
 
   import context._
   import src._
   import res._
+  
+  val description = "project properties (nbproject/project.properties)"
   
   val extracted = Project.extract(currentState)
   

@@ -5,15 +5,30 @@
 
 package netbeans
 
+import sbt._
 import sbt.complete.DefaultParsers._
 
 object NetbeansCommands {
   
-  import NetbeansPlugin._
+  import NetbeansPlugin._ 
+  import scalaz._
+  import Scalaz._
+    
+  private val create = createNetbeansFiles _ *> updateAll _
+  private val createSourceDirs = createSourceDirectories _ *> updateProjectConfig _
   
-  val updateOptions = "update" ~> token(Space  ~> ("all" ^^^ updateNetbeansFiles _)) 
-  val netbeansConsole = Space  ~> token("create" ^^^ createNetbeansFiles _ | 
-                                        updateOptions | 
-                                        "remove" ^^^ removeNetbeansFiles _)   
+  val transitive = token(Space ~> ("transitive" ^^^ true)) ?? false
+  
+  val createOptions = "create" ~> (token(Space ~> ("source-directories" ^^^ createSourceDirs)) ?? create)
+  
+  val updateOptions = "update" ~> token(Space ~> ("all" ^^^ updateAll _ | 
+                                                  "dependencies" ^^^ updateProjectProperties _)) 
+      
+  val removeOptions = "remove" ^^^ removeNetbeansFiles _
+  
+  val netbeansConsole = Space  ~> 
+  (token((createOptions | updateOptions | removeOptions) ~ transitive) map {      
+      case (command, transitive) => (command, transitive)
+    }) ?? (create, false)
 
 }

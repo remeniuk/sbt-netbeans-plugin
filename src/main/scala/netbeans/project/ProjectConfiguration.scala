@@ -1,15 +1,42 @@
 package netbeans.project
 
-import scala.xml.{XML, Node, NodeSeq, Elem}
+import scala.xml.{XML, Node, NodeSeq, Elem, UnprefixedAttribute, Null}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 import sbt._
 import ProjectContext._
 
-class ProjectConfiguration(val originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
-      
+case class ProjectConfiguration(originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
+    
+  val description = "project configuration (nbproject/project.xml)"
+              
+  private val sourceRoots = {
+    import context._
+    import src._
+    import res._
+            
+    Map(
+      ("src.dir", "Scala Source") -> scalaSource.isEmpty,
+      ("src.java.dir", "Java Source") -> javaSource.isEmpty,
+      ("resources.dir", "Resources") -> resources.isEmpty,
+      ("sources.sbt.project", "Configuration") -> false
+    ).filter(_._2 == false).keys
+  }
+  
+  private val testRoots = {
+    import context._
+    import src._
+    import res._
+    
+    Map(
+      ("test.src.dir", "Scala Test Sources") -> scalaTestSource.isEmpty,
+      ("file.reference.test-java", "Java Test Sources") -> javaTestSource.isEmpty,
+      ("test.resources.dir", "Test Resources") -> testResources.isEmpty
+    ).filter(_._2 == false).keys
+  }  
+  
   private val projectConfig = XML.loadFile(originalFilePath.asFile)
-
-  private  val projectConfigRuleTransformer =
+    
+  private val projectConfigRuleTransformer =
     new RuleTransformer(new RewriteRule {
         val references = context.project.uses.flatMap(subProject =>
           <reference>
@@ -21,12 +48,8 @@ class ProjectConfiguration(val originalFilePath: Path)(implicit context: Project
             <id>jar</id>
           </reference>
         ).toSeq
-                
-        override def transform(n: Node): Seq[Node] = {
-          import context._
-          import src._
-          import res._
-          
+                       
+        override def transform(n: Node): Seq[Node] = 
           n match {
             case <name>{_}</name>  =>
               <name>{context.name}</name>
@@ -34,25 +57,23 @@ class ProjectConfiguration(val originalFilePath: Path)(implicit context: Project
             case Elem(prefix, "references", attribs, scope)  =>
               Elem(prefix, "references", attribs, scope, references:_ *)            
    
-            case elem @ Elem(_, "root", attributes, _, children @ _*) 
-            
-              if((elem \\ "@id").text match {
-                  case "src.dir" if(scalaSource.isEmpty) => true
-                  case "test.src.dir" if(scalaTestSource.isEmpty) => true
-                  case "src.java.dir" if(javaSource.isEmpty) => true
-                  case "file.reference.test-java" if(javaSource.isEmpty) => true                                                                  
-                  case "resources.dir" if(resources.isEmpty) => true
-                  case "test.resources.dir" if(testResources.isEmpty) => true
-                  case _ => false
-                }) => NodeSeq.Empty 
-            
+            case <source-roots>{_*}</source-roots> =>
+              <source-roots>{
+                  sourceRoots.flatMap{case (id, name) => <root name={name} id={id}/>}
+                }</source-roots> 
+              
+            case <test-roots>{_*}</test-roots> =>
+              <test-roots>{
+                  testRoots.flatMap{case (id, name) => <root name={name} id={id}/>}
+                }</test-roots>
+                          
             case other => other
           }
-        }
+        
         
       })
   
-  def store(outputFile: Path): Unit =
+  def store(outputFile: Path): Unit = 
     IO.write(outputFile.asFile, projectConfigRuleTransformer(projectConfig).toString.getBytes)
 
 }

@@ -4,14 +4,16 @@ import sbt._
 import scala.xml.{Node, XML}
 import scala.xml.transform.{RuleTransformer, RewriteRule}
 
-class AntScript(val originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
+case class AntScript(originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
     
+  val description = "Ant-script (build.xml)"
+  
   lazy val operatingSystem = System.getProperty("os.name")
 
   private val scriptRewriter = new RuleTransformer(new RewriteRule {
       
       import context._
-      
+                  
       val executable = if(operatingSystem.startsWith("Windows")) "sbt.bat" else "sbt"
       
       override def transform(n: Node): Seq[Node] = n match {

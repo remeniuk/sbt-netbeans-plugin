@@ -11,3 +11,5 @@ resolvers += ScalaToolsSnapshots
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0-SNAPSHOT"
 
 publishArtifact in (Compile, packageDoc) := false
+
+publishTo := Some("Github Repo" at "file:/home/remeniuv/Dropbox/remeniuk.github.com/")
