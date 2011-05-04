@@ -27,15 +27,27 @@ You can either add sources of the plugin to `~/.sbt/plugins` or add a managed de
 
 ### Using the plugin
 
-All the commands applied to the project will also be applied to all the projects it depends on or aggregates (e.g., `netbeans create` applied to the root project will create Netbeans files not only for the root, but also for all the dependencies, etc.).
+By default, any command is applied only to the current project. If you want to apply it to all the projects it depends on or aggregates, `transitive` command should be added (e.g., `netbeans create transitive` applied to the root project will create Netbeans files not only for the root, but also for all the dependencies, etc.).
 
 Create Netbeans files:
 
     > netbeans create
 
+,or simply:
+
+    > netbeans
+
+Create empty source/resource folders:
+
+    > netbeans create source-directories
+
 Update Netbeans files with SBT project settings:
 
     > netbeans update all
+
+Update only those files that contain project classpaths (it's enough to call this command, when a new dependency is added, to reflect it in the IDE):
+
+    > netbeans update dependencies
 
 Remove Netbeans files:
 
