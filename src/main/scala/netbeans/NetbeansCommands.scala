@@ -27,7 +27,7 @@ object NetbeansCommands {
   val removeOptions = "remove" ^^^ removeNetbeansFiles _
   
   val netbeansConsole = Space  ~> 
-  (token((createOptions | updateOptions | removeOptions) ~ transitive) map {      
+  (((createOptions | updateOptions | removeOptions) ~ transitive) map {      
       case (command, transitive) => (command, transitive)
     }) ?? (create, false)
 
