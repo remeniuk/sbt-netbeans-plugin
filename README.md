@@ -38,7 +38,7 @@ Create Netbeans files:
 
     > netbeans
 
-*Along with the Netbeans project files, `netbeans-update-dependencies` task is added to the project settings. This task is automatically triggered every time `update` is called, and checks, if Netbeans project classpath matches SBT classpath. If classpaths differ, `project.properties` is updated. Therefore, when you add a dependency to Netbeans (either managed or unmanaged), and call `update`, those dependencies are immediately plugged to the project and reflected in the IDE*
+*Along with the Netbeans project files, `netbeans-update-dependencies` task is added to the project settings. This task is automatically triggered every time `update` is called, and checks, if Netbeans project classpath matches SBT classpath. If classpaths differ, `project.properties` is updated. Therefore, when you add a dependency (either managed or unmanaged), and call `update`, those dependencies are immediately plugged to the project and reflected in the IDE*
 
 **Now, you can open SBT project in Netbeans!**
 
