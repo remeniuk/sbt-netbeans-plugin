@@ -1,5 +1,16 @@
 **sbt-netbeans-plugin** is a plugin for simple-build-tool that allows working with SBT projects in Netbeans IDE.
 
+### Installing the plugin
+
+You can either add sources of the plugin to `~/.sbt/plugins` or add a managed dependency to the plugin artifact (in the both cases, plugin will be globally available):
+
+    $ cd .sbt/plugins/
+    $ xsbt
+    > set resolvers += "remeniuk repo" at "http://remeniuk.github.com/maven" 
+    > set libraryDependencies += "org.netbeans" %% "sbt-netbeans-plugin" % "0.0.6_0.9.5"
+    > session save
+    > exit
+
 ### Building from source
 
 Clone **sbt-netbeans-plugin**:
@@ -14,16 +25,6 @@ Switch to 0.9 branch:
 Publish to the local ivy repository:
 
     $ xsbt publish-local
-
-### Installing the plugin
-
-You can either add sources of the plugin to `~/.sbt/plugins` or add a managed dependency to the plugin artifact (in the both cases, plugin will be globally available):
-
-    $ cd .sbt/plugins/
-    $ xsbt
-    > set libraryDependencies += "org.netbeans" %% "sbt-netbeans-plugin" % "0.0.6_0.9.5"
-    > session save
-    > exit
 
 ### Using the plugin
 
