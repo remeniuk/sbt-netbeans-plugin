@@ -37,6 +37,8 @@ Create Netbeans files:
 
     > netbeans
 
+*Along with the Netbeans project files, `netbeans-update-dependencies` task is added to the project settings. This task is automatically triggered every time `update` is called, and checks, if Netbeans project classpath matches SBT classpath. If classpaths differ, `project.properties` is updated. Therefore, when you add a dependency to Netbeans (either managed or unmanaged), and call `update`, those dependencies are immediately plugged to the project and reflected in the IDE*
+
 Create empty source/resource folders:
 
     > netbeans create source-directories
@@ -44,6 +46,10 @@ Create empty source/resource folders:
 Update Netbeans files with SBT project settings:
 
     > netbeans update all
+
+,or:
+
+    > netbeans update
 
 Update only those files that contain project classpaths (it's enough to call this command, when a new dependency is added, to reflect it in the IDE):
 
