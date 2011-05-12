@@ -2,6 +2,12 @@
 
 ## History
 
+**Release 0.0.6_0.7.7**:
+
+* Switched to Scala 2.9.0;
+* Switched to SBT 0.7.7;
+* Added basic support for Akka 1.1. Now, you can create an empty Akka project (with sbt-akka-plugin added to the plugin definition and loaded, `AkkaProject` mixed into the project definition, and default `akka.config` ceated in the sources directory), passing `netbeans create akka`;
+
 **Release 0.0.5**:
 
 * Fixed #5, #7;
@@ -30,7 +36,7 @@ Add the processor's repository:
 
 Add **sbt-netbeans-processor**:
 
-        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.5
+        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.6_0.7.7
 
 Create an empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
 
@@ -40,7 +46,7 @@ To get the list of all supported project templates, submit the following command
 
        > netbeans create
        [error] Invalid arg string! Use one of the following:
-       [error] create default | web | plugin | processor
+       [error] create default | web | plugin | processor | akka
 
 Processors are added per SBT-user, so once you install **sbt-netbeans-processor**, it will always require just one SBT command to "netbeanize" the project (without a need to manually create or copy any files).
 In order to remove or update **sbt-netbeans-processor**, use the following command:
@@ -57,7 +63,7 @@ In order to remove or update **sbt-netbeans-processor**, use the following comma
 	class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 
           val netbeansPluginRepo = "Netbeans Plugin Github Repo" at "http://remeniuk.github.com/maven/"
-          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.5"
+          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.6_0.7.7"
 
 	}
 
