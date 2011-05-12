@@ -22,12 +22,18 @@ trait SbtNetbeansPlugin extends BasicScalaProject with MavenStyleScalaPaths {
   /**
    * Creates files required by Netbeans for an existing SBT project
    */
-  lazy val netbeansCreateProfile = netbeansUpdateProfile dependsOn (
-    task {
-      (rootProject.path(".") / "project" / "plugins" ** "*.jar")
-      .filter(_.relativePath.contains("sbt-netbeans-plugin")).get map copyNetbeansFiles           
-      None
-    }) 
+  lazy val netbeansCreateFiles = task {
+    (rootProject.path(".") / "project" / "plugins" ** "*.jar")
+    .filter(_.relativePath.contains("sbt-netbeans-plugin")).get map copyNetbeansFiles           
+    None
+  }
+  
+  /**
+   * Creates files required by Netbeans and updates them with SBT
+   * settings
+   */
+  lazy val netbeansCreateProfile = netbeansUpdateProfile
+  .dependsOn(netbeansCreateFiles, super.updateAction)
 
   /**
    * Updates Netbeans project profile/config according to SBT properties. Project 

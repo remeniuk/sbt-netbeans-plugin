@@ -58,7 +58,7 @@ class DefaultProjectTemplate(project: Project) {
    * @param relative path to the classpath resouce
    * @return either file contents or throwable
    */
-  private def readFromClasspath(file: String): Either[Throwable, String] = {
+  protected def readFromClasspath(file: String): Either[Throwable, String] = {
     val baos = new ByteArrayOutputStream
     try {      
       transfer(getClass.getResourceAsStream(file), baos, project.log)
@@ -72,7 +72,7 @@ class DefaultProjectTemplate(project: Project) {
   /**
    * Writes file contents to the specified destination
    */
-  private def writeFile(contents: String, path: Path) = {
+  protected def writeFile(contents: String, path: Path) = {
     createDirectory(path.asFile.getParentFile, project.log)
     touch(path, project.log)
     write(path.asFile, contents.getBytes, project.log)    

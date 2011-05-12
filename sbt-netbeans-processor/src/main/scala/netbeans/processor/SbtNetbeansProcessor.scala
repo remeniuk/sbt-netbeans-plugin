@@ -7,7 +7,7 @@ import processor.{Processor, ProcessorResult, Reload, Success}
 object SbtNetbeansProcessor{
   
   val errorMessage = "Invalid arg string! Use one of the following:"
-  val createProjectHint = "create default | web | plugin | processor"
+  val createProjectHint = "create default | web | plugin | processor | akka"
      
 }
 
@@ -33,6 +33,7 @@ class SbtNetbeansProcessor extends Processor{
       case "web" => Some(new DefaultWebProjectTemplate(project))
       case "plugin" => Some(new PluginProjectTemplate(project))
       case "processor" => Some(new ProcessorProjectTemplate(project))
+      case "akka" => Some(new AkkaProjectTemplate(project))
       case _ => None   
     }    
     
