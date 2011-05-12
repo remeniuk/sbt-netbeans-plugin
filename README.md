@@ -4,9 +4,9 @@
 
 **Release 0.0.6_0.7.7**:
 
-* Switched to Scala 2.9.0;
-* Switched to SBT 0.7.7;
-* Added basic support for Akka 1.1. Now, you can create an empty Akka project (with sbt-akka-plugin added to the plugin definition and loaded, `AkkaProject` mixed into the project definition, and default `akka.config` ceated in the sources directory), passing `netbeans create akka`;
+* Switched to **Scala 2.9.0**;
+* Switched to **SBT 0.7.7**;
+* Added basic support for **Akka 1.1**. Now, you can create an empty Akka project (with sbt-akka-plugin added to the plugin definition and loaded, `AkkaProject` mixed into the project definition, and default `akka.config` ceated in the sources directory), passing `netbeans create akka`;
 
 **Release 0.0.5**:
 
