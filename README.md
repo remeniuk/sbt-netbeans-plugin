@@ -6,6 +6,7 @@ You can either add sources of the plugin to `~/.sbt/plugins` or add a managed de
 
     $ cd .sbt/plugins/
     $ xsbt
+    > set resolvers += ScalaToolsSnapshots
     > set resolvers += "remeniuk repo" at "http://remeniuk.github.com/maven" 
     > set libraryDependencies += "org.netbeans" %% "sbt-netbeans-plugin" % "0.0.6_0.9.5"
     > session save
