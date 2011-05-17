@@ -14,14 +14,13 @@ object NetbeansPlugin extends Plugin {
   
   /** Extracts Netbeans project files templates from the plugin jar */
   private def copyNetbeansFiles(basePath: Path)(pluginJarPath: File) = 
-    IO.unzip(pluginJarPath, (basePath / "test").asFile, "*.xml" | "*.properties") 
+    IO.unzip(pluginJarPath, basePath, "*.xml" | "*.properties") 
   
   /** Copies packed Netbeans project files templates to the project folder */
-  private def copyPackedTemplates(libClasspath: Classpath, dest: Path) = {
-    libClasspath.filter(_.data.getName.contains("sbt-netbeans-plugin"))      
-    .headOption.map(_.data).map(copyNetbeansFiles(dest))                  
-  }  
-    
+  private def copyPackedTemplates(libClasspath: Seq[File], dest: Path) = 
+    libClasspath.filter(_.getName.contains("sbt-netbeans-plugin"))
+  .headOption.map(copyNetbeansFiles(dest))                  
+        
   /** Copies Netbeans project files templates from ./sbt/plugins */
   private def copyUnpackedTemplates(dest: Path) = {
     buildXmlTemplateLocation.get.map { template =>
@@ -98,9 +97,9 @@ object NetbeansPlugin extends Plugin {
     import extracted._
     
     logger(s).info("Creating Netbeans files for project `%s`" format(projectRef.project))
-    for{base <- baseDirectory in (projectRef, Compile) get structure.data
-        classpath <- Project.evaluateTask(fullClasspath in (projectRef, Compile), s)}{
-      ProjectContext.toOption(classpath).map(copyPackedTemplates(_, base))
+    for{base <- baseDirectory in (projectRef, Compile) get structure.data}{      
+      copyPackedTemplates(currentUnit.unit.plugins.classpath,
+                          base)
       copyUnpackedTemplates(base)
     }
     
