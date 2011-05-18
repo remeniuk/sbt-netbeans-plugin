@@ -13,7 +13,7 @@ object ProjectContext{
   import Keys._
   import scalaz.Scalaz._
   
-  class EmptyPath(path: Path){
+  class EmptyPath(path: File){
     def isEmpty = path.get.headOption.isEmpty
   }
   

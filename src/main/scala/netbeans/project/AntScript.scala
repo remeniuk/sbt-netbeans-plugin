@@ -1,10 +1,11 @@
 package netbeans.project
 
 import sbt._
+import java.io.File
 import scala.xml.{Node, XML}
 import scala.xml.transform.{RuleTransformer, RewriteRule}
 
-case class AntScript(originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
+case class AntScript(originalFilePath: File)(implicit context: ProjectContext) extends NetbeansConfigFile{
     
   val description = "Ant-script (build.xml)"
   
@@ -38,7 +39,7 @@ case class AntScript(originalFilePath: Path)(implicit context: ProjectContext) e
 
     })
 
-  def store(outputFile: Path): Unit = {
+  def store(outputFile: File): Unit = {
     val script = scriptRewriter(XML.loadFile(originalFilePath.asFile)) 
     IO.write(outputFile.asFile, script.toString.getBytes)    
   }

@@ -13,16 +13,16 @@ object NetbeansPlugin extends Plugin {
   private val projectFilesTemplateLocation = BuildPaths.defaultGlobalPlugins / "src" / "main" / "resources" / "nbproject"
   
   /** Extracts Netbeans project files templates from the plugin jar */
-  private def copyNetbeansFiles(basePath: Path)(pluginJarPath: File) = 
+  private def copyNetbeansFiles(basePath: File)(pluginJarPath: File) = 
     IO.unzip(pluginJarPath, basePath, "*.xml" | "*.properties") 
   
   /** Copies packed Netbeans project files templates to the project folder */
-  private def copyPackedTemplates(libClasspath: Seq[File], dest: Path) = 
+  private def copyPackedTemplates(libClasspath: Seq[File], dest: File) = 
     libClasspath.filter(_.getName.contains("sbt-netbeans-plugin"))
   .headOption.map(copyNetbeansFiles(dest))                  
         
   /** Copies Netbeans project files templates from ./sbt/plugins */
-  private def copyUnpackedTemplates(dest: Path) = {
+  private def copyUnpackedTemplates(dest: File) = {
     buildXmlTemplateLocation.get.map { template =>
       IO.copy(Seq(template.asFile -> (dest / "build.xml").asFile), false)  
     }

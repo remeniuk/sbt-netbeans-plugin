@@ -3,8 +3,9 @@ package netbeans.project
 import java.nio.charset.Charset
 import java.util.Properties
 import sbt._
+import java.io.File
 
-case class ProjectProperties(originalFilePath: Path) 
+case class ProjectProperties(originalFilePath: File) 
 (implicit context: ProjectContext)
 extends Properties with NetbeansConfigFile{
 
@@ -21,13 +22,19 @@ extends Properties with NetbeansConfigFile{
   protected def destPath(projectRef: ProjectRef) = 
     (Keys.artifactPath in (projectRef, Keys.makePom) get extracted.structure.data)
   .map(_.absolutePath.replaceAll("\\.pom", ".jar"))
-  
-  private def subprojectProperties =
+    
+  private def subprojectProperties = {
+    import scalaz.Scalaz._
+    
     project.uses.flatMap{subProject =>
-      "project." + subProject.project -> subProject.project  ::
-      "reference." + subProject.project + ".jar" -> destPath(subProject).getOrElse("") :: 
-      Nil
+      ((Keys.artifactPath in (subProject, Keys.makePom) get extracted.structure.data) |@|
+       (Keys.baseDirectory in subProject get extracted.structure.data)) { (_dest, _baseDirectory) =>
+        "reference." + subProject.project + ".jar" -> _dest.absolutePath.replaceAll("\\.pom", ".jar") :: 
+        "project." + subProject.project -> _baseDirectory  ::        
+        Nil
+      } getOrElse Nil
     }
+  }
       
   def properties = Map(
     "application.title" -> name,
@@ -42,7 +49,7 @@ extends Properties with NetbeansConfigFile{
     "dist.jar" -> destPath(extracted.currentRef).getOrElse("")
   ) ++ subprojectProperties
 
-  def store(outputFile: Path): Unit =
+  def store(outputFile: File): Unit =
     IO.writer(outputFile.asFile, "", Charset.defaultCharset, false) { content =>
       properties.foreach(prop => setProperty(prop._1, prop._2.toString))
       store(content, "Generated with sbt-netbeans-plugin")

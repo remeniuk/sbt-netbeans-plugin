@@ -5,13 +5,14 @@
 
 package netbeans.project
 
-import sbt.Path
+import java.io.File
 import scalaz._
 import Scalaz._
+import sbt._
 
 trait NetbeansConfigFile {
 
-  val originalFilePath: Path
+  val originalFilePath: File
 
   def description: String
   
@@ -20,6 +21,6 @@ trait NetbeansConfigFile {
       case head :: tail => this.success
     }).liftFailNel
   
-  def store(outputFile: Path = originalFilePath): Unit
+  def store(outputFile: File = originalFilePath): Unit
     
 }

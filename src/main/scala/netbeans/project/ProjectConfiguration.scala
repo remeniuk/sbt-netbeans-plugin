@@ -4,8 +4,9 @@ import scala.xml.{XML, Node, NodeSeq, Elem, UnprefixedAttribute, Null}
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 import sbt._
 import ProjectContext._
+import java.io.File
 
-case class ProjectConfiguration(originalFilePath: Path)(implicit context: ProjectContext) extends NetbeansConfigFile{
+case class ProjectConfiguration(originalFilePath: File)(implicit context: ProjectContext) extends NetbeansConfigFile{
     
   val description = "project configuration (nbproject/project.xml)"
               
@@ -73,7 +74,7 @@ case class ProjectConfiguration(originalFilePath: Path)(implicit context: Projec
         
       })
   
-  def store(outputFile: Path): Unit = 
+  def store(outputFile: File): Unit = 
     IO.write(outputFile.asFile, projectConfigRuleTransformer(projectConfig).toString.getBytes)
 
 }
