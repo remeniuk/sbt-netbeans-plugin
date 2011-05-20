@@ -63,3 +63,10 @@ If you don't want to add `netbeans-update-dependencies` to the project settings,
 Remove Netbeans files:
 
     > netbeans remove
+
+### Settings
+
+`sbtExecutable (sbt-executable)` - holds the name of SBT executable in your local environment (could be `sbt` on Linux, or `sbt.bat` on Windows). Default value is `sbt`. The setting can be modified through SBT console:
+
+    set sbtExecutable := "xsbt"  
+    sesion save
