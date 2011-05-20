@@ -30,24 +30,26 @@ case class AntScript(originalFilePath: File)(implicit context: ProjectContext) e
             }</project>
           
         case <exec>{args @ _*}</exec> =>
-          <exec executable={sbtExecutableName} dir={baseDirectory.absolutePath}>{args}</exec>
+          <exec executable={sbtExecutableName} dir={
+              new File(extracted.currentRef.build).absolutePath
+            }>{args}</exec>
           
-          /* case arg @ <arg/> =>
-           <arg value={
-           val changeProjectCommand = ";project %s;".format(project.id)
-           val commandLine = (arg \\ "@value").text
-           if(!commandLine.startsWith(changeProjectCommand)) changeProjectCommand + commandLine
-           else commandLine
-           }/> */
+        case arg @ <arg/> =>
+          <arg value={
+              val changeProjectCommand = ";project %s;".format(project.id)
+              val commandLine = (arg \\ "@value").text
+              if(!commandLine.startsWith(changeProjectCommand)) changeProjectCommand + commandLine
+              else commandLine
+            }/> 
 
-        case other => other
+            case other => other
+          }
+
+      })
+
+      def store(outputFile: File): Unit = {
+        val script = scriptRewriter(XML.loadFile(originalFilePath.asFile)) 
+        IO.write(outputFile.asFile, script.toString.getBytes)    
       }
 
-    })
-
-  def store(outputFile: File): Unit = {
-    val script = scriptRewriter(XML.loadFile(originalFilePath.asFile)) 
-    IO.write(outputFile.asFile, script.toString.getBytes)    
-  }
-
-}
+    }
