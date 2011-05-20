@@ -7,25 +7,25 @@
     <import file="nbproject/build-impl.xml"/>
 
     <target description="Clean build products." name="clean">
-        <exec executable="sbt">
+        <exec>
             <arg value="clean"/>
         </exec>
     </target>
 
     <target description="Build JAR." name="jar">
-        <exec executable="sbt">
+        <exec>
             <arg value=";package;package-src"/>
         </exec>
     </target>
 
     <target description="Compile project." name="compile">
-        <exec executable="sbt">
+        <exec>
             <arg value="compile"/>
         </exec>
     </target>
 
     <target description="Run unit tests." name="test">
-        <exec executable="sbt">
+        <exec>
             <arg value="test"/>
         </exec>
     </target>

@@ -7,6 +7,8 @@ import CommandSupport._
 
 object NetbeansPlugin extends Plugin {
   
+  val sbtExecutable = SettingKey[String]("sbt-executable")
+  
   /** build.xml template under ./sbt/plugins (overrides the template in plugin jar) */
   private val buildXmlTemplateLocation = BuildPaths.defaultGlobalPlugins / "src" / "main" / "resources" / "build.xml"
   /** project.properties template under ./sbt/plugins (overrides the template in plugin jar) */

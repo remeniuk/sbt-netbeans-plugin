@@ -18,9 +18,10 @@ object NetbeansTasks {
 
   val updateDepTaskKey = "netbeans-update-dependencies"
   
-  val netbeansUpdateDependencies = TaskKey[Any](updateDepTaskKey) 
+  val netbeansUpdateDependencies = TaskKey[Any](updateDepTaskKey)   
   
   val netbeansSettings = Seq(
+    sbtExecutable := "sbt",
     netbeansUpdateDependencies <<= updateProjectPropertiesTask triggeredBy(update)
   )    
   

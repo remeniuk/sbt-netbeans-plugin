@@ -1,5 +1,7 @@
 package netbeans.project
 
+import netbeans.NetbeansPlugin
+import netbeans.NetbeansTasks
 import sbt._
 import java.io.File
 import scala.xml.{Node, XML}
@@ -15,8 +17,12 @@ case class AntScript(originalFilePath: File)(implicit context: ProjectContext) e
       
       import context._
                   
-      val executable = if(operatingSystem.startsWith("Windows")) "sbt.bat" else "sbt"
+      val extracted = Project.extract(currentState)
       
+      val sbtExecutableName = (NetbeansPlugin.sbtExecutable in 
+                               extracted.currentRef get 
+                               extracted.structure.data).getOrElse("sbt")
+            
       override def transform(n: Node): Seq[Node] = n match {
         case <project>{children @ _*}</project> =>
           <project name={context.name} default="default">{
@@ -24,15 +30,15 @@ case class AntScript(originalFilePath: File)(implicit context: ProjectContext) e
             }</project>
           
         case <exec>{args @ _*}</exec> =>
-          <exec dir={baseDirectory.absolutePath} executable={executable}>{args}</exec>
+          <exec executable={sbtExecutableName} dir={baseDirectory.absolutePath}>{args}</exec>
           
-        case arg @ <arg/> =>
-          <arg value={
-              val changeProjectCommand = ";project %s;".format(project.id)
-              val commandLine = (arg \\ "@value").text
-              if(!commandLine.startsWith(changeProjectCommand)) changeProjectCommand + commandLine
-              else commandLine
-            }/>
+          /* case arg @ <arg/> =>
+           <arg value={
+           val changeProjectCommand = ";project %s;".format(project.id)
+           val commandLine = (arg \\ "@value").text
+           if(!commandLine.startsWith(changeProjectCommand)) changeProjectCommand + commandLine
+           else commandLine
+           }/> */
 
         case other => other
       }
