@@ -2,7 +2,7 @@ organization := "org.netbeans"
 
 name := "sbt-netbeans-plugin"
 
-version := "0.0.6_0.9.7"
+version := "0.0.7_0.9.7"
 
 sbtPlugin := true
 
