@@ -66,4 +66,7 @@ Remove Netbeans files:
 
 ### Settings
 
-`sbtExecutable (sbt-executable)`, default value `sbt`. Override it, if SBT executable name is different is your system.
+`sbtExecutable (sbt-executable)` - holds the name of SBT executable in your local environment (could be `sbt` on Linux, or `sbt.bat` on Windows). Default value is `sbt`. The setting can be modified through SBT console:
+
+    set sbtExecutable := "xsbt"  
+    sesion save
