@@ -75,5 +75,5 @@ Remove Netbeans files:
 
 Special thanks for contributed ideas and help with testing to:
 
-    - Andrew Gaydenko
-    - Ali Mukadam
+* Andrew Gaydenko
+* Ali Mukadam
