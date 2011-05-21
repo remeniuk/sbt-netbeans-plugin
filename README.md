@@ -70,3 +70,10 @@ Remove Netbeans files:
 
     set sbtExecutable := "xsbt"  
     sesion save
+
+## Credits
+
+Special thanks for contributed ideas and help with testing to:
+
+    - Andrew Gaydenko
+    - Ali Mukadam
