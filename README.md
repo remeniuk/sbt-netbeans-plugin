@@ -2,6 +2,10 @@
 
 ## History
 
+**Release 0.0.7_0.7.7**:
+
+* Fixed the issue with incorrect order of fired tasks on profile creation;
+
 **Release 0.0.6_0.7.7**:
 
 * Switched to **Scala 2.9.0**;
@@ -36,7 +40,7 @@ Add the processor's repository:
 
 Add **sbt-netbeans-processor**:
 
-        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.6_0.7.7
+        > *netbeans is org.netbeans.plugin sbt-netbeans-processor 0.0.7_0.7.7
 
 Create an empty SBT-Netbeans project with just one command (plugins and project definitions will be created for you, and **sbt-netbeans-plugin** will be downloaded and wired automatically):
 
@@ -63,7 +67,7 @@ In order to remove or update **sbt-netbeans-processor**, use the following comma
 	class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 
           val netbeansPluginRepo = "Netbeans Plugin Github Repo" at "http://remeniuk.github.com/maven/"
-          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.6_0.7.7"
+          val netbeansPlugin = "org.netbeans.plugin" % "sbt-netbeans-plugin" % "0.0.7_0.7.7"
 
 	}
 
