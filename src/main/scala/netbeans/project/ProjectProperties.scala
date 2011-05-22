@@ -46,6 +46,7 @@ extends Properties with NetbeansConfigFile{
     "resources.dir" -> resources,                
     "javac.classpath" -> compileClasspathString,
     "javac.test.classpath" -> testClasspathString,
+    "main.class" -> mainClass.getOrElse(""),
     "dist.jar" -> destPath(extracted.currentRef).getOrElse("")
   ) ++ subprojectProperties
 

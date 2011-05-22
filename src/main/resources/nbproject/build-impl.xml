@@ -39,11 +39,11 @@ is divided into following sections:
         <condition property="scala.home" value="${env.SCALA_HOME}">
             <isset property="env.SCALA_HOME"/>
         </condition>
-        <fail unless="scala.home">
+        <!--fail unless="scala.home">
                     You must set SCALA_HOME or environment property and append "-J-Dscala.home=scalahomepath"
                     property to the end of "netbeans_default_options" in NetBeansInstallationPath/etc/netbeans.conf to point to
                     Scala installation directory.
-        </fail>
+        </fail-->
         <property name="scala.compiler" value="${scala.home}/lib/scala-compiler.jar"/>
         <property name="scala.library" value="${scala.home}/lib/scala-library.jar"/>
         <property name="scala.lib" value="${scala.home}/lib"/>

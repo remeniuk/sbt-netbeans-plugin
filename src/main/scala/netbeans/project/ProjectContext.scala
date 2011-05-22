@@ -31,7 +31,8 @@ object ProjectContext{
     (scalaSource in (currentProjectRef, Compile) get structure.data) |@| 
     (scalaSource in (currentProjectRef, Test) get structure.data) |@| 
     (javaSource in (currentProjectRef, Compile) get structure.data) |@| 
-    (javaSource in (currentProjectRef, Test) get structure.data) apply ProjectSources.apply
+    (javaSource in (currentProjectRef, Test) get structure.data) |@|  
+    Project.evaluateTask(mainClass in (currentProjectRef, Compile, run), s).flatMap(toOption) apply ProjectSources.apply
   }
   
   def projectResources(currentProjectRef: ProjectRef, s: State) = {
@@ -70,7 +71,7 @@ object ProjectContext{
 } 
 
 case class ProjectSources(scalaSource: File, scalaTestSource: File, 
-                          javaSource: File, javaTestSource: File)
+                          javaSource: File, javaTestSource: File, mainClass: Option[String])
 case class ProjectResources(resources: File, testResources: File)
 case class ProjectClasspaths(compileClasspath: Keys.Classpath, testClasspath: Keys.Classpath)
 

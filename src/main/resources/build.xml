@@ -29,5 +29,34 @@
             <arg value="test"/>
         </exec>
     </target>
+    
+    <target name="run-single">
+        <exec>
+            <arg value="run-main ${run.class}"></arg>
+        </exec>        
+    </target>
+    
+    <target description="Run a main class." name="run">
+        <echo>You must set the main class for the main 'run' task. Change Compile to Test to set it for 'test:run': 
+        mainClass in (Compile, run) := Some({main.class})
+        </echo>
+        <exec>
+            <arg value="run"></arg>
+        </exec>        
+    </target>       
+    
+    <target name="debug-single">
+        <echo>
+            Add -Xrunjdwp:transport=dt_socket,address={jpda.address} as an argument
+            to the SBT (specifying desired `jpda.address`), attach debugger and run the file.
+        </echo>
+    </target>    
+    
+    <target description="Debug project in IDE." name="debug">
+        <echo>
+            Add -Xrunjdwp:transport=dt_socket,address={jpda.address} as an argument
+            to the SBT (specifying desired `jpda.address`), attach debugger and run the project.
+        </echo>        
+    </target>    
 
 </project>
