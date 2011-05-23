@@ -13,6 +13,14 @@ You can either add sources of the plugin to `~/.sbt/plugins` or add a managed de
     > session save
     > exit
 
+### Older versions of the plugin
+
+Older versions of the plugin are available here: http://remeniuk.github.com/maven/org/netbeans/
+
+* 0.0.6_0.9.6
+* 0.0.6_0.9.7
+* 0.0.7_0.9.7
+
 ### Building from source
 
 Clone **sbt-netbeans-plugin**:
