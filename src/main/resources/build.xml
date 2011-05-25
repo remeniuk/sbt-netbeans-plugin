@@ -57,6 +57,12 @@
             Add -Xrunjdwp:transport=dt_socket,address={jpda.address} as an argument
             to the SBT (specifying desired `jpda.address`), attach debugger and run the project.
         </echo>        
-    </target>    
+    </target>  
+    
+    <target name="-javadoc-build">
+        <exec>
+            <arg value="package-doc"></arg>
+        </exec>        
+    </target>        
 
 </project>
