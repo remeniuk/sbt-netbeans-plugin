@@ -28,11 +28,14 @@ object ProjectContext{
     val extracted = Project extract s
     import extracted._    
     
+    val _mainClass = Project.evaluateTask(mainClass in (currentProjectRef, Compile, run), s)
+    .flatMap(toOption).flatMap(x => x)
+        
     (scalaSource in (currentProjectRef, Compile) get structure.data) |@| 
     (scalaSource in (currentProjectRef, Test) get structure.data) |@| 
     (javaSource in (currentProjectRef, Compile) get structure.data) |@| 
     (javaSource in (currentProjectRef, Test) get structure.data) |@|  
-    Project.evaluateTask(mainClass in (currentProjectRef, Compile, run), s).flatMap(toOption) apply ProjectSources.apply
+    Some(_mainClass) apply ProjectSources.apply
   }
   
   def projectResources(currentProjectRef: ProjectRef, s: State) = {
@@ -47,11 +50,10 @@ object ProjectContext{
     val extracted = Project extract s
     import extracted._    
     
-    ((Project.evaluateTask(fullClasspath in (currentProjectRef, Compile), s) |@|
-      Project.evaluateTask(fullClasspath in (currentProjectRef, Test), s)) apply { (compCp, testCp) =>
+    ((Project.evaluateTask(externalDependencyClasspath in (currentProjectRef, Compile), s) |@|
+      Project.evaluateTask(externalDependencyClasspath in (currentProjectRef, Test), s)) apply { (compCp, testCp) =>
         (toOption(compCp) |@| toOption(testCp)) apply ProjectClasspaths.apply
       }).flatten.headOption
-    
   } 
   
   def netbeansContext(currentProjectRef: ProjectRef, s: State) = {
