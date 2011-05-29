@@ -8,10 +8,12 @@ You can either add sources of the plugin to `~/.sbt/plugins` or add a managed de
     $ xsbt
     > set resolvers += ScalaToolsSnapshots
     > set resolvers += "remeniuk repo" at "http://remeniuk.github.com/maven" 
-    > set libraryDependencies += "org.netbeans" %% "sbt-netbeans-plugin" % "0.0.9"
+    > set libraryDependencies += "org.netbeans" %% "sbt-netbeans-plugin" % "0.0.10"
     > update
     > session save
     > exit
+
+Version `0.0.10` is compatible with `Scala 2.9.0-1` and `SBT 0.9.9`.
 
 ### Older versions of the plugin
 
@@ -21,6 +23,7 @@ Older versions of the plugin are available here: http://remeniuk.github.com/mave
 * 0.0.6_0.9.7
 * 0.0.7_0.9.7
 * 0.0.8_0.9.8
+* 0.0.9
 
 ### Building from source
 
