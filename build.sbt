@@ -2,19 +2,19 @@ organization := "org.netbeans"
 
 name := "sbt-netbeans-plugin"
 
-version := "0.0.9"
+version := "0.0.10"
 
 sbtPlugin := true
 
 resolvers += ScalaToolsSnapshots
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0-SNAPSHOT"
+libraryDependencies += "org.scalaz" % "scalaz-core_2.8.1" % "6.0-SNAPSHOT"
 
 publishArtifact in (Compile, packageDoc) := false
 
 publishMavenStyle := true
 
-publishTo := Some(Resolver.file("ghrepo", new File("D:/project/remeniuk.github.com/maven"))(Patterns(true, Resolver.mavenStyleBasePattern)))
+publishTo := Some(Resolver.file("ghrepo", new File("/home/remeniuv/remeniuk.github.com/maven"))(Patterns(true, Resolver.mavenStyleBasePattern)))
 
 pomPostProcess := { (pom: scala.xml.Node) => 
   import scala.xml._ 
