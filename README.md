@@ -26,10 +26,6 @@ Clone **sbt-netbeans-plugin**:
     $ git clone -n git://github.com/remeniuk/sbt-netbeans-plugin.git
     $ cd sbt-netbeans-plugin
 
-Switch to 0.9 branch:
-
-    $ git checkout 0.9
-
 Publish to the local ivy repository:
 
     $ xsbt publish-local
