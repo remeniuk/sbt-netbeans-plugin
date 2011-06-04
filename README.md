@@ -129,6 +129,7 @@ In order to remove Netbeans artifacts from the project folder, you may use `netb
 
         > git clone git://github.com/remeniuk/sbt-netbeans-plugin.git
         > cd sbt-netbeans-plugin
+        > git checkout 0.7.7
         > sbt publish-local
 
 ## License
