@@ -2,7 +2,7 @@ organization := "org.netbeans"
 
 name := "sbt-netbeans-plugin"
 
-version := "0.1.0"
+version := "0.1.2"
 
 sbtPlugin := true
 
@@ -14,4 +14,4 @@ publishArtifact in (Compile, packageDoc) := false
 
 publishMavenStyle := true
 
-publishTo := Some(Resolver.file("ghrepo", new File("/home/remeniuv/remeniuk.github.com/maven"))(Patterns(true, Resolver.mavenStyleBasePattern)))
+publishTo := Some(Resolver.file("ghrepo", new File("/home/remeniuv/projects/remeniuk.github.com/maven"))(Patterns(true, Resolver.mavenStyleBasePattern)))

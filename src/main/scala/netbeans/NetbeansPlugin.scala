@@ -10,9 +10,9 @@ object NetbeansPlugin extends Plugin {
   val sbtExecutable = SettingKey[String]("sbt-executable")
   
   /** build.xml template under ./sbt/plugins (overrides the template in plugin jar) */
-  private val buildXmlTemplateLocation = BuildPaths.defaultGlobalPlugins / "src" / "main" / "resources" / "build.xml"
+  private val buildXmlTemplateLocation = BuildPaths.defaultGlobalPlugins(BuildPaths.defaultGlobalBase) / "src" / "main" / "resources" / "build.xml"
   /** project.properties template under ./sbt/plugins (overrides the template in plugin jar) */
-  private val projectFilesTemplateLocation = BuildPaths.defaultGlobalPlugins / "src" / "main" / "resources" / "nbproject"
+  private val projectFilesTemplateLocation = BuildPaths.defaultGlobalPlugins(BuildPaths.defaultGlobalBase) / "src" / "main" / "resources" / "nbproject"
   
   /** Extracts Netbeans project files templates from the plugin jar */
   private def copyNetbeansFiles(basePath: File)(pluginJarPath: File) = 
