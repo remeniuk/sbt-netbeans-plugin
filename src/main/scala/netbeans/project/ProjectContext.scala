@@ -67,7 +67,7 @@ object ProjectContext{
     projectSources(currentProjectRef, s) |@|
     projectResources(currentProjectRef, s) |@| 
     projectClasspaths(currentProjectRef, s) |@|
-    (scalaInstance in (currentProjectRef, Compile) get structure.data) apply ProjectContext.apply
+    Project.evaluateTask(scalaInstance in (currentProjectRef, Compile), s).flatMap(toOption) apply ProjectContext.apply
   }
   
 } 
