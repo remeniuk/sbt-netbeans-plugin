@@ -8,7 +8,7 @@ sbtPlugin := true
 
 resolvers ++= Seq(ScalaToolsSnapshots, "Typesafe Repo" at "http://repo.typesafe.com/typesafe")
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
 publishArtifact in (Compile, packageDoc) := false
 
