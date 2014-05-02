@@ -2,13 +2,13 @@ organization := "org.netbeans"
 
 name := "sbt-netbeans-plugin"
 
-version := "0.1.4"
+version := "0.1.5"
 
 sbtPlugin := true
 
 resolvers ++= Seq(ScalaToolsSnapshots, "Typesafe Repo" at "http://repo.typesafe.com/typesafe")
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.3"
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4"
 
 publishArtifact in (Compile, packageDoc) := false
 
